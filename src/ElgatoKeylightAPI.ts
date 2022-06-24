@@ -19,11 +19,7 @@ export class ElgatoKeylightAPI extends EventEmitter {
 
         this.keyLights = new Array();
 
-        // If a keylight is found upon init, add it immediately
-        const browser = this.bonjour.find({ type: 'elg' }, (service) => {
-            //@ts-expect-error
-            this.addKeylight(service);
-        });
+        const browser = this.bonjour.find({ type: 'elg' });
         // Continually monitors for a new keylight to be added
         browser.on('up', service => {
             //@ts-expect-error
@@ -46,7 +42,8 @@ export class ElgatoKeylightAPI extends EventEmitter {
         }
 
         // Don't add a light twice.
-        if (this.keyLights.find(el => el.ip === keyLight.ip)) {
+        const found = this.keyLights.find(el => { return el.ip === keyLight.ip; });
+        if (found) {
             return;
         }
 
