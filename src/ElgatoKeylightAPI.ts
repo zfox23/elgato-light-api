@@ -21,6 +21,7 @@ export class ElgatoKeylightAPI extends EventEmitter {
 
         // If a keylight is found upon init, add it immediately
         const browser = this.bonjour.find({ type: 'elg' }, (service) => {
+            //@ts-expect-error
             this.addKeylight(service);
         });
         // Continually monitors for a new keylight to be added
